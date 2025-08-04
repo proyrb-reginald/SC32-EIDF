@@ -1,0 +1,294 @@
+{
+  "name": "eidf",
+  "type": "ARM",
+  "dependenceList": [],
+  "srcDirs": [
+    "user",
+    "hal",
+    "mid",
+    ".cmsis",
+    "dev"
+  ],
+  "virtualFolder": {
+    "name": "<virtual_root>",
+    "files": [],
+    "folders": []
+  },
+  "outDir": "build",
+  "deviceName": null,
+  "packDir": null,
+  "miscInfo": {
+    "uid": "08d5b281b30fe674b8d5d1f2bfa45136"
+  },
+  "targets": {
+    "Main": {
+      "excludeList": [
+        ".cmsis/device/ARM/ARMCA5",
+        ".cmsis/device/ARM/ARMCA7",
+        ".cmsis/device/ARM/ARMCA9",
+        ".cmsis/device/ARM/ARMCM0",
+        ".cmsis/device/ARM/ARMCM1",
+        ".cmsis/device/ARM/ARMCM23",
+        ".cmsis/device/ARM/ARMCM3",
+        ".cmsis/device/ARM/ARMCM33",
+        ".cmsis/device/ARM/ARMCM35P",
+        ".cmsis/device/ARM/ARMCM4",
+        ".cmsis/device/ARM/ARMCM55",
+        ".cmsis/device/ARM/ARMCM7",
+        ".cmsis/device/ARM/ARMCM85",
+        ".cmsis/device/ARM/ARMSC000",
+        ".cmsis/device/ARM/ARMSC300",
+        ".cmsis/device/ARM/ARMv81MML",
+        ".cmsis/device/ARM/ARMv8MBL",
+        ".cmsis/device/ARM/ARMv8MML",
+        ".cmsis/device/ARM/SVD",
+        ".cmsis/device/ARM/ARMCM0plus/Source/ARM/startup_ARMCM0plus.s",
+        ".cmsis/device/ARM/ARMCM0plus/Source/IAR",
+        ".cmsis/device/ARM/ARMCM0plus/Source/GCC",
+        "mid/lvgl/examples",
+        "mid/lvgl/src/libs/barcode",
+        "mid/lvgl/src/libs/bmp",
+        "mid/lvgl/src/libs/expat",
+        "mid/lvgl/src/libs/ffmpeg",
+        "mid/lvgl/src/libs/freetype",
+        "mid/lvgl/src/libs/gif",
+        "mid/lvgl/src/libs/libjpeg_turbo",
+        "mid/lvgl/src/libs/libpng",
+        "mid/lvgl/src/libs/lodepng",
+        "mid/lvgl/src/libs/lz4",
+        "mid/lvgl/src/libs/qrcode",
+        "mid/lvgl/src/libs/rle",
+        "mid/lvgl/src/libs/rlottie",
+        "mid/lvgl/src/libs/svg",
+        "mid/lvgl/src/libs/thorvg",
+        "mid/lvgl/src/libs/tiny_ttf",
+        "mid/lvgl/src/draw/dma2d",
+        "mid/lvgl/src/draw/nema_gfx",
+        "mid/lvgl/src/draw/nxp",
+        "mid/lvgl/src/draw/opengles",
+        "mid/lvgl/src/draw/renesas",
+        "mid/lvgl/src/draw/sdl",
+        "mid/lvgl/src/others/file_explorer",
+        "mid/lvgl/src/others/font_manager",
+        "mid/lvgl/src/others/fragment",
+        "mid/lvgl/src/others/gridnav",
+        "mid/lvgl/src/others/ime",
+        "mid/lvgl/src/others/imgfont",
+        "mid/lvgl/src/others/monkey",
+        "mid/lvgl/src/others/snapshot",
+        "mid/lvgl/src/others/test",
+        "mid/lvgl/src/others/vg_lite_tvg",
+        "mid/lvgl/src/others/xml",
+        "mid/lvgl/src/layouts/grid",
+        "mid/lvgl/port/lv_port_fs.c",
+        "mid/lvgl/src/themes/mono",
+        "mid/lvgl/src/themes/simple",
+        "mid/lvgl/src/draw/vg_lite",
+        "mid/lvgl/src/stdlib/clib",
+        "mid/lvgl/src/stdlib/micropython",
+        "mid/lvgl/src/stdlib/rtthread",
+        "mid/lvgl/src/stdlib/uefi",
+        "mid/lvgl/src/drivers",
+        "mid/lvgl/src/osal/lv_cmsis_rtos2.c",
+        "mid/lvgl/src/osal/lv_linux.c",
+        "mid/lvgl/src/osal/lv_mqx.c",
+        "mid/lvgl/src/osal/lv_pthread.c",
+        "mid/lvgl/src/osal/lv_rtthread.c",
+        "mid/lvgl/src/osal/lv_sdl2.c",
+        "mid/lvgl/src/osal/lv_windows.c",
+        "mid/lvgl/src/osal/lv_os_none.c"
+      ],
+      "toolchain": "AC6",
+      "compileConfig": {
+        "cpuType": "Cortex-M0+",
+        "archExtensions": "",
+        "floatingPointHardware": "none",
+        "scatterFilePath": "",
+        "useCustomScatterFile": false,
+        "storageLayout": {
+          "RAM": [
+            {
+              "tag": "RAM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "RAM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "RAM",
+              "id": 3,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "IRAM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x20000000",
+                "size": "0x8000"
+              },
+              "isChecked": true,
+              "noInit": false
+            },
+            {
+              "tag": "IRAM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "noInit": false
+            }
+          ],
+          "ROM": [
+            {
+              "tag": "ROM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            },
+            {
+              "tag": "ROM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            },
+            {
+              "tag": "ROM",
+              "id": 3,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            },
+            {
+              "tag": "IROM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x40000"
+              },
+              "isChecked": true,
+              "isStartup": true
+            },
+            {
+              "tag": "IROM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            }
+          ]
+        },
+        "options": "null"
+      },
+      "uploader": "Custom",
+      "uploadConfig": {
+        "bin": "",
+        "commandLine": "UV4 -p \"./.keil/eidf.uvprojx\" -f",
+        "eraseChipCommand": ""
+      },
+      "uploadConfigMap": {
+        "JLink": {
+          "bin": "",
+          "baseAddr": "",
+          "cpuInfo": {
+            "vendor": "null",
+            "cpuName": "null"
+          },
+          "proType": 1,
+          "speed": 8000,
+          "otherCmds": ""
+        }
+      },
+      "custom_dep": {
+        "name": "default",
+        "incList": [
+          ".cmsis/inc",
+          "hal/inc",
+          "user",
+          "mid/freertos/inc",
+          "user/os",
+          "mid/freertos/port/gcc/arm/cm0",
+          "mid/lvgl",
+          "dev/st7789v",
+          "user/log",
+          "user/gui",
+          "mid/lvgl/port",
+          "user/gui/design",
+          "dev/w25q64",
+          "mid/littlefs",
+          "user/fs"
+        ],
+        "libList": [],
+        "defineList": [
+          "SC32R803",
+          "PrintfEnable",
+          "LV_CONF_INCLUDE_SIMPLE",
+          "LV_LVGL_H_INCLUDE_SIMPLE"
+        ]
+      },
+      "builderOptions": {
+        "AC6": {
+          "version": 3,
+          "beforeBuildTasks": [],
+          "afterBuildTasks": [],
+          "global": {
+            "output-debug-info": "enable",
+            "use-microLIB": true
+          },
+          "c/cpp-compiler": {
+            "optimization": "level-balanced",
+            "language-c": "gnu11",
+            "language-cpp": "gnu++11",
+            "link-time-optimization": true,
+            "one-elf-section-per-function": true,
+            "warnings": "misra-compatible"
+          },
+          "asm-compiler": {
+            "$use": "asm-auto"
+          },
+          "linker": {
+            "output-format": "elf",
+            "misc-controls": "--diag_suppress=L6329",
+            "ro-base": "0x00000000",
+            "rw-base": "0x20000000",
+            "$disableOutputTask": true
+          }
+        }
+      }
+    }
+  },
+  "version": "3.6"
+}
