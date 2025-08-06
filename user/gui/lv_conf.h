@@ -69,7 +69,7 @@
 
 #if LV_USE_STDLIB_MALLOC == LV_STDLIB_BUILTIN
     /** Size of memory available for `lv_malloc()` in bytes (>= 2kB) */
-    #define LV_MEM_SIZE (63 * 256U)          /**< [bytes] */
+    #define LV_MEM_SIZE (61 * 256U)          /**< [bytes] */
 
     /** Size of the memory expand for `lv_malloc()` in bytes */
     #define LV_MEM_POOL_EXPAND_SIZE 0
@@ -154,7 +154,7 @@
 /** Stack size of drawing thread.
  * NOTE: If FreeType or ThorVG is enabled, it is recommended to set it to 32KB or more.
  */
-#define LV_DRAW_THREAD_STACK_SIZE (400 * 4)
+#define LV_DRAW_THREAD_STACK_SIZE (420 * 4)
 
 /** Thread priority of the drawing task.
  *  Higher values mean higher priority.
@@ -176,9 +176,9 @@
     #define LV_DRAW_SW_SUPPORT_RGB565                   1
     #define LV_DRAW_SW_SUPPORT_RGB565_SWAPPED           0
     #define LV_DRAW_SW_SUPPORT_RGB565A8                 0
-    #define LV_DRAW_SW_SUPPORT_RGB888                   1
+    #define LV_DRAW_SW_SUPPORT_RGB888                   0
     #define LV_DRAW_SW_SUPPORT_XRGB8888                 0
-    #define LV_DRAW_SW_SUPPORT_ARGB8888                 0
+    #define LV_DRAW_SW_SUPPORT_ARGB8888                 1
     #define LV_DRAW_SW_SUPPORT_ARGB8888_PREMULTIPLIED   0
     #define LV_DRAW_SW_SUPPORT_L8                       0
     #define LV_DRAW_SW_SUPPORT_AL88                     0
@@ -1025,7 +1025,7 @@
     /** 1: Show used memory and memory fragmentation.
      *     - Requires `LV_USE_STDLIB_MALLOC = LV_STDLIB_BUILTIN`
      *     - Requires `LV_USE_SYSMON = 1`*/
-    #define LV_USE_MEM_MONITOR 0
+    #define LV_USE_MEM_MONITOR 1
     #if LV_USE_MEM_MONITOR
         #define LV_USE_MEM_MONITOR_POS LV_ALIGN_BOTTOM_LEFT
     #endif

@@ -33,26 +33,10 @@
     xSemaphoreGive(os_md_init_done);                                                     \
     vTaskDelete(NULL)
 
-// 等待系统模块初始化完成
-#define WAIT_OS_MD_INIT()                                                                \
-    if (xSemaphoreTake(os_md_init_done, portMAX_DELAY) == pdTRUE) {                      \
-        vTaskDelay(50);                                                                  \
-        OS_PRTF(NEWS_LOG, "start task init! free: %u", xPortGetFreeHeapSize());          \
-    }
-
-// 任务创建函数完成
-#define OS_TASK_INIT_DONE()                                                              \
-    OS_PRTF(NEWS_LOG, "init task done! free: %u W / %u B",                               \
-            uxTaskGetStackHighWaterMark2(NULL), xPortGetFreeHeapSize());                 \
-    vTaskDelete(NULL)
-
 /********** 导出的全局变量 **********/
 
 // 系统模块初始化同步信号量
 extern SemaphoreHandle_t os_md_init_done;
-
-// 系统任务初始化同步信号量
-extern SemaphoreHandle_t os_task_init_done;
 
 // DMA互斥锁
 extern SemaphoreHandle_t dma_mutex;

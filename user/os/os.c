@@ -4,6 +4,9 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "timers.h"
+#include "user.h"
+#include "st7789v.h"
+#include "gui.h"
 #include <stdio.h>
 
 #if (SYS_TASK_CNT > 16)
@@ -16,31 +19,67 @@ SemaphoreHandle_t dma_mutex = NULL;
 
 static TaskHandle_t sys_task[SYS_TASK_CNT] = {NULL};
 
+#define GUI_TASK_STACK 1250
+static StackType_t  main_task_stack[GUI_TASK_STACK];
+static StaticTask_t main_task_tcb;
+
+#define LCD_TASK_STACK 60
+static StackType_t  lcd_task_stack[LCD_TASK_STACK];
+static StaticTask_t lcd_task_tcb;
+
 void vApplicationDaemonTaskStartupHook(void) {
     /********** 初始化系统资源 **********/
 
-    BaseType_t rst = os_init();
-    if (rst != pdPASS) {
-        configASSERT(0);
-    }
-
-    /********** 创建主任务 **********/
-
-    rst = xTaskCreate(os_task_init, "os_task_init", 80, 0, configMAX_PRIORITIES - 3, 0);
-
-    if (rst != pdPASS) {
-        OS_PRTF(ERRO_LOG, "create os_task_init fail!");
+    BaseType_t init_rst = os_init();
+    if (init_rst != pdPASS) {
         configASSERT(0);
     }
 
     /********** 创建模块初始化任务 **********/
 
-    rst = xTaskCreate(os_md_init, "os_md_init", 360, 0, configMAX_PRIORITIES - 3, 0);
-
-    if (rst != pdPASS) {
+    TaskHandle_t creat_rst =
+        xTaskCreateStatic(os_md_init, "os_md_init", 350, NULL, configMAX_PRIORITIES - 2,
+                          main_task_stack, &main_task_tcb);
+    if (creat_rst == NULL) {
         OS_PRTF(ERRO_LOG, "create os_md_init fail!");
         configASSERT(0);
     }
+    if (xSemaphoreTake(os_md_init_done, portMAX_DELAY) == pdTRUE) {
+        vTaskDelay(50);
+    }
+
+    /********** 创建主任务 **********/
+
+#if ADD_ST7789V
+    creat_rst =
+        xTaskCreateStatic(st7789v_task, "lcd", LCD_TASK_STACK, NULL,
+                          (configMAX_PRIORITIES - 4), lcd_task_stack, &lcd_task_tcb);
+    if (init_rst != pdPASS) {
+        OS_PRTF(ERRO_LOG, "create lcd fail!");
+        configASSERT(0);
+    } else {
+        OS_PRTF(NEWS_LOG, "create lcd done!");
+        init_rst = os_add_task(&creat_rst);
+        if (init_rst != pdPASS) {
+            configASSERT(0);
+        }
+    }
+#endif  // ADD_ST7789V
+
+#if ADD_GUI
+    creat_rst = xTaskCreateStatic(gui_task, "gui", GUI_TASK_STACK, NULL, 1,
+                                  main_task_stack, &main_task_tcb);
+    if (init_rst != pdPASS) {
+        OS_PRTF(ERRO_LOG, "create gui fail!");
+        configASSERT(0);
+    } else {
+        OS_PRTF(NEWS_LOG, "create gui done!");
+        init_rst = os_add_task(&creat_rst);
+        if (init_rst != pdPASS) {
+            configASSERT(0);
+        }
+    }
+#endif  // ADD_GUI
 }
 
 void vApplicationMallocFailedHook(void) {

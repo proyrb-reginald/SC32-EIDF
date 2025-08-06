@@ -21,6 +21,7 @@
 #    include "../misc/lv_log.h"
 #    include "../core/lv_global.h"
 
+#    include "log.h"
 #    include "os.h"
 
 /*********************
@@ -103,6 +104,7 @@ lv_result_t lv_thread_init(lv_thread_t *      pxThread,
         return LV_RESULT_INVALID;
     }
 
+    OS_PRTF(NEWS_LOG, "create draw done!");
     os_add_task(&pxThread->xTaskHandle);
 
     return LV_RESULT_OK;

@@ -108,7 +108,7 @@
 /* configTIMER_TASK_PRIORITY设置定时器任务优先级 */
 #define configTIMER_TASK_PRIORITY (configMAX_PRIORITIES - 1)
 /* configTIMER_TASK_STACK_DEPTH设置定时器任务堆栈大小 */
-#define configTIMER_TASK_STACK_DEPTH 60
+#define configTIMER_TASK_STACK_DEPTH 80
 /* configTIMER_QUEUE_LENGTH设置定时器命令队列长度 */
 #define configTIMER_QUEUE_LENGTH 4
 /******************************************************************************/
@@ -125,11 +125,11 @@
 /* 内存分配相关定义 *********************************************************/
 /******************************************************************************/
 /* 设置configSUPPORT_STATIC_ALLOCATION为1启用静态内存分配API */
-#define configSUPPORT_STATIC_ALLOCATION 0
+#define configSUPPORT_STATIC_ALLOCATION 1
 /* 设置configSUPPORT_DYNAMIC_ALLOCATION为1启用动态内存分配API */
 #define configSUPPORT_DYNAMIC_ALLOCATION 1
 /* 设置heap_1/2/4.c使用的堆大小（字节） */
-#define configTOTAL_HEAP_SIZE (40 * 256U)
+#define configTOTAL_HEAP_SIZE (16 * 256U)
 /* 设置configAPPLICATION_ALLOCATED_HEAP为1由应用分配堆内存 */
 #define configAPPLICATION_ALLOCATED_HEAP 0
 /* 设置configSTACK_ALLOCATION_FROM_SEPARATE_HEAP为1从独立堆分配任务栈 */
