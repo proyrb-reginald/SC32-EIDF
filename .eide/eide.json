@@ -265,7 +265,7 @@
           "beforeBuildTasks": [],
           "afterBuildTasks": [],
           "global": {
-            "output-debug-info": "enable",
+            "output-debug-info": "disable",
             "use-microLIB": true
           },
           "c/cpp-compiler": {
@@ -283,8 +283,7 @@
             "output-format": "elf",
             "misc-controls": "--diag_suppress=L6329",
             "ro-base": "0x00000000",
-            "rw-base": "0x20000000",
-            "$disableOutputTask": true
+            "rw-base": "0x20000000"
           }
         }
       }

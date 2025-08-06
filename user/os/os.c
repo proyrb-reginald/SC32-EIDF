@@ -23,7 +23,7 @@ static TaskHandle_t sys_task[SYS_TASK_CNT] = {NULL};
 static StackType_t  main_task_stack[GUI_TASK_STACK];
 static StaticTask_t main_task_tcb;
 
-#define LCD_TASK_STACK 60
+#define LCD_TASK_STACK 50
 static StackType_t  lcd_task_stack[LCD_TASK_STACK];
 static StaticTask_t lcd_task_tcb;
 

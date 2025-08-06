@@ -129,7 +129,7 @@
 /* 设置configSUPPORT_DYNAMIC_ALLOCATION为1启用动态内存分配API */
 #define configSUPPORT_DYNAMIC_ALLOCATION 1
 /* 设置heap_1/2/4.c使用的堆大小（字节） */
-#define configTOTAL_HEAP_SIZE (16 * 256U)
+#define configTOTAL_HEAP_SIZE (15 * 256U)
 /* 设置configAPPLICATION_ALLOCATED_HEAP为1由应用分配堆内存 */
 #define configAPPLICATION_ALLOCATED_HEAP 0
 /* 设置configSTACK_ALLOCATION_FROM_SEPARATE_HEAP为1从独立堆分配任务栈 */
