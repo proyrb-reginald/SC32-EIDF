@@ -72,6 +72,12 @@ static void timer_cb(lv_timer_t * timer) {
         lv_label_set_text_fmt(ui_main_label_timem, "%u", time_m);
     }
     lv_label_set_text_fmt(ui_main_label_times, "%u", time_s);
+
+    if (time_s % 3 == 0) {
+        uint8_t val = (1 - (float)xPortGetFreeHeapSize() / configTOTAL_HEAP_SIZE) * 100;
+        lv_label_set_text_fmt(ui_main_label_heapval, "%u %%", val);
+        lv_bar_set_value(ui_main_bar_heapbar, val, LV_ANIM_ON);
+    }
 }
 
 static void ui_init(void) {
