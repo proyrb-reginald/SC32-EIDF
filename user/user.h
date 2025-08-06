@@ -26,7 +26,7 @@
 #define ADD_EBD_FS 1
 
 // 是否在启动时重置启动信息
-#define RST_BOOT_INFO 1
+#define RST_BOOT_INFO 0
 
 // 是否添加基于片外文件系统的相关代码
 #if ADD_W25Q64

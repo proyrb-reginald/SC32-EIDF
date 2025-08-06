@@ -66,7 +66,7 @@
 /* configMINIMAL_STACK_SIZE定义空闲任务使用的堆栈大小（以字为单位，非字节）*/
 #define configMINIMAL_STACK_SIZE 70
 /* configMAX_TASK_NAME_LEN设置任务名称最大长度（含NULL终止符） */
-#define configMAX_TASK_NAME_LEN 16
+#define configMAX_TASK_NAME_LEN 12
 /* 时间以"滴答"为单位计量 - 自RTOS启动以来的中断次数
  * 滴答计数类型为TickType_t
  * configTICK_TYPE_WIDTH_IN_BITS控制TickType_t的位宽：
@@ -81,7 +81,7 @@
  * 设置数组索引数量 */
 #define configTASK_NOTIFICATION_ARRAY_ENTRIES 1
 /* configQUEUE_REGISTRY_SIZE设置队列注册表最大容量（调试器使用） */
-#define configQUEUE_REGISTRY_SIZE 4
+#define configQUEUE_REGISTRY_SIZE 2
 /* 设置configENABLE_BACKWARD_COMPATIBILITY为1启用旧版本兼容映射 */
 #define configENABLE_BACKWARD_COMPATIBILITY 0
 /* 每个任务具有线程本地存储指针数组，configNUM_THREAD_LOCAL_STORAGE_POINTERS
@@ -97,7 +97,7 @@
 /* 设置configHEAP_CLEAR_MEMORY_ON_FREE为1时释放内存会清零 */
 #define configHEAP_CLEAR_MEMORY_ON_FREE 0
 /* vTaskList等API使用的缓冲区长度，默认0xFFFF */
-#define configSTATS_BUFFER_MAX_LENGTH 512
+#define configSTATS_BUFFER_MAX_LENGTH 0
 /* 设置configUSE_NEWLIB_REENTRANT为1为每个任务分配newlib重入结构 */
 #define configUSE_NEWLIB_REENTRANT 0
 /******************************************************************************/
@@ -110,7 +110,7 @@
 /* configTIMER_TASK_STACK_DEPTH设置定时器任务堆栈大小 */
 #define configTIMER_TASK_STACK_DEPTH 80
 /* configTIMER_QUEUE_LENGTH设置定时器命令队列长度 */
-#define configTIMER_QUEUE_LENGTH 4
+#define configTIMER_QUEUE_LENGTH 2
 /******************************************************************************/
 /* 事件组相关定义 ***********************************************************/
 /******************************************************************************/
@@ -129,7 +129,7 @@
 /* 设置configSUPPORT_DYNAMIC_ALLOCATION为1启用动态内存分配API */
 #define configSUPPORT_DYNAMIC_ALLOCATION 1
 /* 设置heap_1/2/4.c使用的堆大小（字节） */
-#define configTOTAL_HEAP_SIZE (15 * 256U)
+#define configTOTAL_HEAP_SIZE (14 * 256U)
 /* 设置configAPPLICATION_ALLOCATED_HEAP为1由应用分配堆内存 */
 #define configAPPLICATION_ALLOCATED_HEAP 0
 /* 设置configSTACK_ALLOCATION_FROM_SEPARATE_HEAP为1从独立堆分配任务栈 */
