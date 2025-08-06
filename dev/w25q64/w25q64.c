@@ -1,29 +1,20 @@
 #define W25Q64_C
 
-#include "w25q64.h"
-#include "sc32_conf.h"
-#include "os.h"
-#include "log.h"
+#include <w25q64.h>
+#include <log.h>
 #include <string.h>
+#include <stdbool.h>
 
-static SemaphoreHandle_t dma_done = NULL;
+static volatile bool dma_done = false;
 
-BaseType_t w25q64_init(void) {
-    if (dma_done == NULL) {
-        dma_done = xSemaphoreCreateBinary();
-        if (dma_done == NULL) {
-            OS_PRTF(ERRO_LOG, "create dma_done fail!\n");
-            return pdFAIL;
-        }
-    }
-
+int8_t w25q64_init(void) {
     GPIO_WriteBit(CHIP_GPIO_GRP, CHIP_GPIO_PIN, 1);
 
     uint8_t    data[8] = {0};
     w25q64_arg arg;
 
     w25q64_ctl(Reset, NULL);
-    vTaskDelay(1);
+    SC_Delay(1);
 
     arg.data = data;
     arg.size = sizeof(data);
@@ -58,20 +49,26 @@ BaseType_t w25q64_init(void) {
 
     w25q64_ctl(EraseChip, NULL);
     do {
-        vTaskDelay(10);
+        SC_Delay(10);
         w25q64_ctl(ReadSR1, &erase_arg);
     } while (SR1 & 0x1);
 #endif  // CHIP_ERASE
 
     OS_PRTF(NEWS_LOG, "Initialize Finish!");
 
-    return pdPASS;
+    return 0;
 }
 
-__inline__ void w25q64_dma_irq(void) {
-    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-    xSemaphoreGiveFromISR(dma_done, &xHigherPriorityTaskWoken);
-    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+__inline__ void w25q64_dma_tx_irq(void) {
+    QSPI_DMACmd(USE_QSPI, QSPI_DMAReq_TX, DISABLE);
+    DMA_Cmd(USE_DMA_TX, DISABLE);
+    dma_done = true;
+}
+
+__inline__ void w25q64_dma_rx_irq(void) {
+    QSPI_DMACmd(USE_QSPI, QSPI_DMAReq_RX, DISABLE);
+    DMA_Cmd(USE_DMA_RX, DISABLE);
+    dma_done = true;
 }
 
 static void _w25q64_send_bytes(const uint8_t * const data, const uint32_t size) {
@@ -154,20 +151,14 @@ __attribute__((optnone)) void w25q64_ctl(const w25q64_cmd         cmd,
                 } else {
                     /********** 用DMA连续接收字节流 **********/
 
-                    if (xSemaphoreTake(dma_mutex, portMAX_DELAY) == pdTRUE) {
-                        DMA_SetDstAddress(USE_DMA_RX, (uint32_t)arg->data);
-                        DMA_SetCurrDataCounter(USE_DMA_RX, arg->size);
-                        DMA_Cmd(USE_DMA_RX, ENABLE);
-                        QSPI_DMACmd(USE_QSPI, QSPI_DMAReq_RX, ENABLE);
-                        QSPI_CLKONLYSet(USE_QSPI, QSPI_CLKONLY_ON);
+                    DMA_SetDstAddress(USE_DMA_RX, (uint32_t)arg->data);
+                    DMA_SetCurrDataCounter(USE_DMA_RX, arg->size);
+                    DMA_Cmd(USE_DMA_RX, ENABLE);
+                    QSPI_DMACmd(USE_QSPI, QSPI_DMAReq_RX, ENABLE);
+                    QSPI_CLKONLYSet(USE_QSPI, QSPI_CLKONLY_ON);
 
-                        if (xSemaphoreTake(dma_done, portMAX_DELAY) == pdTRUE) {
-                            QSPI_DMACmd(USE_QSPI, QSPI_DMAReq_RX, DISABLE);
-                            DMA_Cmd(USE_DMA_RX, DISABLE);
-                        }
-
-                        xSemaphoreGive(dma_mutex);
-                    }
+                    while (!dma_done) {}
+                    dma_done = false;
                 }
 
             } break;
@@ -190,20 +181,14 @@ __attribute__((optnone)) void w25q64_ctl(const w25q64_cmd         cmd,
                     USE_QSPI, (cmd == ProgramQSPI) ? QSPI_LMode_4Line : QSPI_LMode_1Line,
                     QSPI_DWidth_8bit, QSPI_CLKONLY_OFF);
 
-                if (xSemaphoreTake(dma_mutex, portMAX_DELAY) == pdTRUE) {
-                    DMA_SetSrcAddress(USE_DMA_TX, (uint32_t)arg->data);
-                    DMA_SetCurrDataCounter(USE_DMA_TX, arg->size);
-                    DMA_Cmd(USE_DMA_TX, ENABLE);
-                    QSPI_DMACmd(USE_QSPI, QSPI_DMAReq_TX, ENABLE);
-                    DMA_SoftwareTrigger(USE_DMA_TX);
+                DMA_SetSrcAddress(USE_DMA_TX, (uint32_t)arg->data);
+                DMA_SetCurrDataCounter(USE_DMA_TX, arg->size);
+                DMA_Cmd(USE_DMA_TX, ENABLE);
+                QSPI_DMACmd(USE_QSPI, QSPI_DMAReq_TX, ENABLE);
+                DMA_SoftwareTrigger(USE_DMA_TX);
 
-                    if (xSemaphoreTake(dma_done, portMAX_DELAY) == pdTRUE) {
-                        QSPI_DMACmd(USE_QSPI, QSPI_DMAReq_TX, DISABLE);
-                        DMA_Cmd(USE_DMA_TX, DISABLE);
-                    }
-
-                    xSemaphoreGive(dma_mutex);
-                }
+                while (!dma_done) {}
+                dma_done = false;
             } break;
             default: break;
         }

@@ -67,7 +67,7 @@ int ebd_fs_init(void) {
     rst = fs_ls_dir(&ebd_fs, "/");
     rst = fs_ls_dir(&ebd_fs, SYS_DIR);
 
-    return pdPASS;
+    return 0;
 }
 
 lfs * ebd_fs_hdl(void) {

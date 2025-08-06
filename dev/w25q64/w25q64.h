@@ -6,15 +6,13 @@
  * @details 先初始化模块。
  * @file w25q64.h
  * @author proyrb
- * @date 2025/7/28
+ * @date 2025/8/6
  * @note
  */
 
 /********** 导入需要的头文件 **********/
 
-#include "sc32_conf.h"
-#include "FreeRTOS.h"
-#include "semphr.h"
+#include <sc32_conf.h>
 
 /********** 选择 gpio 引脚 **********/
 
@@ -94,16 +92,25 @@ typedef struct {
  * @warning 必须先初始化模块后才能进行后续操作。
  * @note
  */
-BaseType_t w25q64_init(void);
+int8_t w25q64_init(void);
 
 /**
- * @brief dma中断处理。
+ * @brief dma发送中断处理。
  * @param
  * @retval
  * @warning 禁止在非中断中调用。
  * @note
  */
-void w25q64_dma_irq(void);
+void w25q64_dma_tx_irq(void);
+
+/**
+ * @brief dma接收中断处理。
+ * @param
+ * @retval
+ * @warning 禁止在非中断中调用。
+ * @note
+ */
+void w25q64_dma_rx_irq(void);
 
 /**
  * @brief 发送控制指令与附带的可选参数。

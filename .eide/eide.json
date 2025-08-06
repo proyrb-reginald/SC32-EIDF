@@ -96,7 +96,9 @@
         "mid/lvgl/src/osal/lv_rtthread.c",
         "mid/lvgl/src/osal/lv_sdl2.c",
         "mid/lvgl/src/osal/lv_windows.c",
-        "mid/lvgl/src/osal/lv_os_none.c"
+        "mid/freertos",
+        "user/os",
+        "user/user.c"
       ],
       "toolchain": "AC6",
       "compileConfig": {

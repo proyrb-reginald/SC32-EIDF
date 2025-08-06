@@ -1,10 +1,9 @@
 #include "gui.h"
-#include "os.h"
 #include "log.h"
 #include "lvgl.h"
 #include "lv_port_disp.h"
 #include "etn_fs.h"
-#include "user.h"
+#include "main.h"
 #include "ebd_fs.h"
 #include "etn_fs.h"
 #include "fs.h"
@@ -337,7 +336,7 @@ static void ui_init(void) {
     lv_bar_set_start_value(ui_main_bar_heapbar, 0, LV_ANIM_OFF);
     lv_bar_set_orientation(ui_main_bar_heapbar, LV_BAR_ORIENTATION_VERTICAL);
     lv_obj_set_height(ui_main_bar_heapbar, lv_pct(80));
-    lv_obj_set_width(ui_main_bar_heapbar, 12);
+    lv_obj_set_width(ui_main_bar_heapbar, 8);
     lv_obj_set_align(ui_main_bar_heapbar, LV_ALIGN_CENTER);
     lv_obj_remove_flag(ui_main_bar_heapbar,
                        LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE |
@@ -649,9 +648,8 @@ static void ui_init(void) {
 }
 #endif
 
-BaseType_t gui_init(void) {
+void gui_init(void) {
     lv_init();
-    lv_tick_set_cb(xTaskGetTickCount);
 #if ADD_ETN_FS
     lv_littlefs_set_handler(etn_fs_hdl());
 #endif
@@ -659,12 +657,8 @@ BaseType_t gui_init(void) {
     ui_init();
     OS_PRTF(NEWS_LOG, "init lvgl done!");
 
-    return pdPASS;
-}
-
-__attribute__((noreturn)) void gui_task(void * task_arg) {
     while (1) {
         uint32_t slp_tm = lv_timer_handler();
-        vTaskDelay((slp_tm > GUI_MIN_SLP_MS) ? slp_tm : GUI_MIN_SLP_MS);
+        SC_Delay((slp_tm > GUI_MIN_SLP_MS) ? slp_tm : GUI_MIN_SLP_MS);
     }
 }

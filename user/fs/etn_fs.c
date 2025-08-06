@@ -80,7 +80,7 @@ int etn_fs_init(void) {
     rst = fs_ls_dir(&etn_fs, SYS_DIR);
     rst = fs_ls_dir(&etn_fs, RES_DIR);
 
-    return pdPASS;
+    return 0;
 }
 
 lfs * etn_fs_hdl(void) {
@@ -131,7 +131,7 @@ int etn_fs_erase(const lfs_cfg * cfg, lfs_block_t blk) {
 
     w25q64_ctl(Erase4KB, &erase_arg);
     do {
-        vTaskDelay(5);
+        SC_Delay(5);
         w25q64_ctl(ReadSR1, &erase_arg);
     } while (SR1 & 0x1);
 
@@ -177,7 +177,7 @@ int etn_fs_write(const lfs_cfg * cfg,
         };
 
         do {
-            vTaskDelay(1);
+            SC_Delay(1);
             w25q64_ctl(ReadSR1, &read_arg);
         } while (SR1 & 0x1);
 

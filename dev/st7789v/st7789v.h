@@ -6,14 +6,12 @@
  * @details 先调用st7789v_init初始化模块；再调用st7789v_async_fill来填充指定的屏幕区域。
  * @file st7789v.h
  * @author proyrb
- * @date 2025/7/28
+ * @date 2025/8/6
  * @note
  */
 
 /********** 导入需要的头文件 **********/
 
-#include "FreeRTOS.h"
-#include "task.h"
 #include "lvgl.h"
 #include "lv_port_disp.h"
 
@@ -53,7 +51,7 @@
 
 // 是否启用测试
 #ifdef ST7789V_C
-#    define TEST 0
+#    define ST7789V_TEST 0
 #endif  // ST7789V_C
 
 /********** 主要使用的指令 **********/
@@ -87,7 +85,7 @@ typedef struct {
  * @warning 必须先初始化模块后才能进行后续操作。
  * @note
  */
-BaseType_t st7789v_init(void);
+int8_t st7789v_init(void);
 
 /**
  * @brief dma中断处理。
@@ -110,13 +108,13 @@ void st7789v_dma_irq(void);
 void st7789v_ctl(const st7789v_cmd cmd, const st7789v_arg * const arg);
 
 /**
- * @brief 屏幕填充任务。
- * @param task_arg 任务参数：暂时没有使用。
+ * @brief 屏幕驱动测试。
+ * @param
  * @retval
- * @warning
+ * @warning 不会返回。
  * @note
  */
-void st7789v_task(void * task_arg);
+void st7789v_test(void);
 
 /**
  * @brief 向屏幕指定区域填充字节流。

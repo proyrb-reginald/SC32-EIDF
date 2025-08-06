@@ -1,4 +1,5 @@
 #include "init.h"
+#include "log.h"
 
 void rcc_init(void) {
     if (RCC_Unlock(0xFF) != SUCCESS) {
@@ -16,6 +17,10 @@ void rcc_init(void) {
     if (RCC_SYSCLKConfig(RCC_SYSCLKSource_HIRC) != SUCCESS) {
         while (1) {}
     }
+    RCC_SystickCLKConfig(RCC_SysTickSource_HCLK_DIV8);
+    RCC_SystickSetCounter(8000);
+    __NVIC_SetPriority(SysTick_IRQn, 0);
+    RCC_SystickCmd(ENABLE);
 
     RCC_APB0Config(RCC_HCLK_Div1);
     RCC_APB0Cmd(ENABLE);

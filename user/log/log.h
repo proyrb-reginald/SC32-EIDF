@@ -6,13 +6,13 @@
  * @details
  * @file log.h
  * @author proyrb
- * @date 2025/7/30
+ * @date 2025/8/6
  * @note
  */
 
 /********** 导入需要的头文件 **********/
 
-#include "FreeRTOS.h"
+#include <sc32_conf.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -30,10 +30,10 @@
 #define LOG_LEV NEWS_LOG
 
 // 格式化打印接口函数
-#define PRINTF printf  // log_async_printf
+#define PRINTF printf
 
 // 获取系统时刻接口函数
-#define GET_TICK xTaskGetTickCount
+#define GET_TICK RCC_SystickGetCounter
 
 // 获取文件名
 #define __FILENAME__                                                                     \
@@ -44,14 +44,17 @@
 // 普通日志打印
 #define PRTF(lev, fmt, ...)                                                              \
     if (lev >= LOG_LEV) {                                                                \
-        taskENTER_CRITICAL();                                                            \
         PRINTF(fmt, ##__VA_ARGS__);                                                      \
-        taskEXIT_CRITICAL();                                                             \
     }
 
 // 附带系统信息的日志打印
 #define OS_PRTF(lev, fmt, ...)                                                           \
-    PRTF(lev, "[%u:%s:%s:%d] " fmt "\n", GET_TICK(), pcTaskGetName(NULL), __FILENAME__,  \
-         __LINE__, ##__VA_ARGS__);
+    PRTF(lev, "[%u:%s:%d] " fmt "\n", GET_TICK(), __FILENAME__, __LINE__, ##__VA_ARGS__);
+
+// 断言
+#define configASSERT(x)                                                                  \
+    if (x) {                                                                             \
+        while (1) {}                                                                     \
+    }
 
 #endif  // LOG_H

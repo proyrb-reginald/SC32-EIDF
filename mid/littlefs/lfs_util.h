@@ -34,10 +34,7 @@
 // And build littlefs with the header by defining LFS_DEFINES.
 // (-DLFS_DEFINES=my_defines.h)
 
-#    include "log.h"
-#    include "FreeRTOS.h"
-#    define LFS_MALLOC(size) pvPortMalloc(size)
-#    define LFS_FREE(ptr) vPortFree(ptr)
+#    include <log.h>
 #    define LFS_NO_ASSERT
 
 #    ifdef LFS_DEFINES
