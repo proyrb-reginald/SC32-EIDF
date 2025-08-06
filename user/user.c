@@ -80,7 +80,7 @@ void os_task_init(void * task_arg) {
 #endif  // ADD_ST7789V
 
 #if ADD_GUI
-    rst = xTaskCreate(gui_task, "gui", 650, NULL, 1, &task_hdl);
+    rst = xTaskCreate(gui_task, "gui", 850, NULL, 1, &task_hdl);
     if (rst != pdPASS) {
         while (1) {
             OS_PRTF(ERRO_LOG, "create gui fail!");

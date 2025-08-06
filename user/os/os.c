@@ -47,6 +47,17 @@ void vApplicationMallocFailedHook(void) {
     OS_PRTF(ERRO_LOG, "malloc fail!");
 }
 
+static char get_task_state(TaskHandle_t xTask) {
+    switch (eTaskGetState(xTask)) {
+        case eRunning: return 'W';
+        case eReady: return 'R';
+        case eBlocked: return 'B';
+        case eSuspended: return 'S';
+        case eDeleted: return 'D';
+        default: return 'U';
+    }
+}
+
 void vApplicationIdleHook(void) {
     static TickType_t last_time = 0;
     TickType_t        now_time  = xTaskGetTickCount();
@@ -57,14 +68,19 @@ void vApplicationIdleHook(void) {
              xPortGetMinimumEverFreeHeapSize());
         for (uint8_t i = 0; i < SYS_TASK_CNT; i++) {
             if (sys_task[i]) {
-                PRTF(NEWS_LOG, " %s: %zu W\n", pcTaskGetName(sys_task[i]),
+                PRTF(NEWS_LOG, " [%c] %s: %zu W\n", get_task_state(sys_task[i]),
+                     pcTaskGetName(sys_task[i]),
                      uxTaskGetStackHighWaterMark2(sys_task[i]));
             }
         }
-        PRTF(NEWS_LOG, " %s: %zu W\n", pcTaskGetName(xTimerGetTimerDaemonTaskHandle()),
-             uxTaskGetStackHighWaterMark2(xTimerGetTimerDaemonTaskHandle()));
-        PRTF(NEWS_LOG, " %s: %zu W\n", pcTaskGetName(xTaskGetIdleTaskHandle()),
-             uxTaskGetStackHighWaterMark2(xTaskGetIdleTaskHandle()));
+
+        TaskHandle_t sys_task_hdl = xTimerGetTimerDaemonTaskHandle();
+        PRTF(NEWS_LOG, " [%c] %s: %zu W\n", get_task_state(sys_task_hdl),
+             pcTaskGetName(sys_task_hdl), uxTaskGetStackHighWaterMark2(sys_task_hdl));
+
+        sys_task_hdl = xTaskGetIdleTaskHandle();
+        PRTF(NEWS_LOG, " [%c] %s: %zu W\n", get_task_state(sys_task_hdl),
+             pcTaskGetName(sys_task_hdl), uxTaskGetStackHighWaterMark2(sys_task_hdl));
 
         last_time = now_time;
     }

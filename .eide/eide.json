@@ -1,5 +1,5 @@
 {
-  "name": "eidf",
+  "name": "Project",
   "type": "ARM",
   "dependenceList": [],
   "srcDirs": [
@@ -216,7 +216,7 @@
       "uploader": "Custom",
       "uploadConfig": {
         "bin": "",
-        "commandLine": "UV4 -p \"./.keil/eidf.uvprojx\" -f",
+        "commandLine": "UV4 -p \"./.keil/project.uvprojx\" -f",
         "eraseChipCommand": ""
       },
       "uploadConfigMap": {

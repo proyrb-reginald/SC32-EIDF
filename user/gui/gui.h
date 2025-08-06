@@ -6,17 +6,13 @@
  * @details
  * @file gui.h
  * @author proyrb
- * @date 2025/7/30
+ * @date 2025/8/4
  * @note
  */
 
 /********** 导入需要的头文件 **********/
 
 #include "FreeRTOS.h"
-
-/********** 配置GUI选项 **********/
-
-#define GUI_MIN_SLP_MS 3
 
 /********** 导出的函数 **********/
 

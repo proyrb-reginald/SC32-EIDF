@@ -4,6 +4,7 @@
 #include "sc32_conf.h"
 #include "log.h"
 #include "fs.h"
+#include "user.h"
 
 static lfs_cfg ebd_fs_cfg = {
     .read  = ebd_fs_read,
@@ -25,23 +26,23 @@ static lfs ebd_fs;
 int ebd_fs_init(void) {
     /********** 挂载文件系统 **********/
 
-    int err = lfs_mount(&ebd_fs, &ebd_fs_cfg);
+    int rst = lfs_mount(&ebd_fs, &ebd_fs_cfg);
 
-    if (err) {
+    if (rst) {
         OS_PRTF(ERRO_LOG, "mount ebd_fs fail!");
-        err = lfs_format(&ebd_fs, &ebd_fs_cfg);
+        rst = lfs_format(&ebd_fs, &ebd_fs_cfg);
 
-        if (err) {
+        if (rst) {
             OS_PRTF(ERRO_LOG, "fmt ebd_fs fail!");
-            return err;
+            return rst;
         } else {
             OS_PRTF(NEWS_LOG, "fmt ebd_fs done!");
         }
 
-        err = lfs_mount(&ebd_fs, &ebd_fs_cfg);
-        if (err) {
+        rst = lfs_mount(&ebd_fs, &ebd_fs_cfg);
+        if (rst) {
             OS_PRTF(ERRO_LOG, "mount ebd_fs fail again!");
-            return err;
+            return rst;
         }
     }
 
@@ -49,14 +50,19 @@ int ebd_fs_init(void) {
 
     /********** 更新启动信息 **********/
 
-    int rst;
-
+#if RST_BOOT_INFO
+    rst = fs_reset_boot_cnt(&ebd_fs);
+    if (rst) {
+        OS_PRTF(ERRO_LOG, "rst boot fail with %d!", rst);
+    }
+#endif
     rst = fs_update_boot_cnt(&ebd_fs);
-
     rst = fs_get_boot_cnt(&ebd_fs);
     if (rst > -1) {
         OS_PRTF(NEWS_LOG, "boot cnt: %d!", rst);
     }
+
+    /********** 输出文件系统内容 **********/
 
     rst = fs_ls_dir(&ebd_fs, "/");
     rst = fs_ls_dir(&ebd_fs, SYS_DIR);

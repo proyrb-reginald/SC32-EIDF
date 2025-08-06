@@ -36,7 +36,9 @@
             "regex": "c",
             "stack": "c",
             "__locale": "c",
-            "typeinfo": "c"
+            "typeinfo": "c",
+            "limits": "c",
+            "ratio": "c"
         },
         "[yaml]": {
             "editor.insertSpaces": true,

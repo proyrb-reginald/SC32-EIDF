@@ -69,7 +69,7 @@
 
 #if LV_USE_STDLIB_MALLOC == LV_STDLIB_BUILTIN
     /** Size of memory available for `lv_malloc()` in bytes (>= 2kB) */
-    #define LV_MEM_SIZE (67 * 256U)          /**< [bytes] */
+    #define LV_MEM_SIZE (63 * 256U)          /**< [bytes] */
 
     /** Size of the memory expand for `lv_malloc()` in bytes */
     #define LV_MEM_POOL_EXPAND_SIZE 0
@@ -585,7 +585,7 @@
  * https://fonts.google.com/specimen/Montserrat */
 #define LV_FONT_MONTSERRAT_8  0
 #define LV_FONT_MONTSERRAT_10 1
-#define LV_FONT_MONTSERRAT_12 0
+#define LV_FONT_MONTSERRAT_12 1
 #define LV_FONT_MONTSERRAT_14 0
 #define LV_FONT_MONTSERRAT_16 0
 #define LV_FONT_MONTSERRAT_18 0
@@ -629,7 +629,7 @@
 #define LV_FONT_CUSTOM_DECLARE
 
 /** Always set a default font */
-#define LV_FONT_DEFAULT &lv_font_montserrat_10
+#define LV_FONT_DEFAULT &lv_font_montserrat_12
 
 /** Enable handling large font and/or fonts with a lot of characters.
  *  The limit depends on the font size, font face and bpp.
@@ -729,7 +729,7 @@
 
 #define LV_USE_CANVAS     0
 
-#define LV_USE_CHART      0
+#define LV_USE_CHART      1
 
 #define LV_USE_CHECKBOX   0
 
@@ -750,7 +750,7 @@
 
 #define LV_USE_LED        0
 
-#define LV_USE_LINE       0
+#define LV_USE_LINE       1
 
 #define LV_USE_LIST       0
 
@@ -762,7 +762,7 @@
 
 #define LV_USE_ROLLER     1  /**< Requires: lv_label */
 
-#define LV_USE_SCALE      0
+#define LV_USE_SCALE      1
 
 #define LV_USE_SLIDER     1  /**< Requires: lv_bar */
 

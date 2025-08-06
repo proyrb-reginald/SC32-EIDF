@@ -97,7 +97,7 @@
 /* 设置configHEAP_CLEAR_MEMORY_ON_FREE为1时释放内存会清零 */
 #define configHEAP_CLEAR_MEMORY_ON_FREE 0
 /* vTaskList等API使用的缓冲区长度，默认0xFFFF */
-#define configSTATS_BUFFER_MAX_LENGTH 0
+#define configSTATS_BUFFER_MAX_LENGTH 512
 /* 设置configUSE_NEWLIB_REENTRANT为1为每个任务分配newlib重入结构 */
 #define configUSE_NEWLIB_REENTRANT 0
 /******************************************************************************/
@@ -129,7 +129,7 @@
 /* 设置configSUPPORT_DYNAMIC_ALLOCATION为1启用动态内存分配API */
 #define configSUPPORT_DYNAMIC_ALLOCATION 1
 /* 设置heap_1/2/4.c使用的堆大小（字节） */
-#define configTOTAL_HEAP_SIZE (36 * 256U)
+#define configTOTAL_HEAP_SIZE (40 * 256U)
 /* 设置configAPPLICATION_ALLOCATED_HEAP为1由应用分配堆内存 */
 #define configAPPLICATION_ALLOCATED_HEAP 0
 /* 设置configSTACK_ALLOCATION_FROM_SEPARATE_HEAP为1从独立堆分配任务栈 */
@@ -162,6 +162,10 @@
 /******************************************************************************/
 /* 设置configGENERATE_RUN_TIME_STATS为1启用任务运行时间统计 */
 #define configGENERATE_RUN_TIME_STATS 0
+#if configGENERATE_RUN_TIME_STATS
+#    define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS()       // 定义定时器配置
+#    define portGET_RUN_TIME_COUNTER_VALUE() (xTickCount)  // 获取计数器值
+#endif
 /* 设置configUSE_TRACE_FACILITY为1包含调试跟踪信息 */
 #define configUSE_TRACE_FACILITY 0
 /* 设置configUSE_STATS_FORMATTING_FUNCTIONS为1包含统计格式化函数 */
@@ -274,7 +278,7 @@
 #define INCLUDE_uxTaskGetStackHighWaterMark 0
 #define INCLUDE_uxTaskGetStackHighWaterMark2 1
 #define INCLUDE_xTaskGetIdleTaskHandle 1
-#define INCLUDE_eTaskGetState 0
+#define INCLUDE_eTaskGetState 1
 #define INCLUDE_xTimerPendFunctionCall 0
 #define INCLUDE_xTaskAbortDelay 0
 #define INCLUDE_xTaskGetHandle 0

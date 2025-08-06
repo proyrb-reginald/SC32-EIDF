@@ -5,6 +5,7 @@
 #include "w25q64.h"
 #include "lvgl.h"
 #include "fs.h"
+#include "user.h"
 
 static lfs_cfg etn_fs_cfg = {
     .read  = etn_fs_read,
@@ -61,6 +62,12 @@ int etn_fs_init(void) {
 
     /********** 更新启动信息 **********/
 
+#if RST_BOOT_INFO
+    rst = fs_reset_boot_cnt(&etn_fs);
+    if (rst) {
+        OS_PRTF(ERRO_LOG, "rst boot fail with %d!", rst);
+    }
+#endif
     rst = fs_update_boot_cnt(&etn_fs);
     rst = fs_get_boot_cnt(&etn_fs);
     if (rst > -1) {

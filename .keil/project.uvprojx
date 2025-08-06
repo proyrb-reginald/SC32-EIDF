@@ -49,7 +49,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>..\build\Main\</OutputDirectory>
-          <OutputName>eidf</OutputName>
+          <OutputName>project</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -172,8 +172,8 @@
             <AdsLsun>0</AdsLsun>
             <AdsLven>0</AdsLven>
             <AdsLsxf>0</AdsLsxf>
-            <RvctClst>1</RvctClst>
-            <GenPPlst>1</GenPPlst>
+            <RvctClst>0</RvctClst>
+            <GenPPlst>0</GenPPlst>
             <AdsCpuType>"Cortex-M0+"</AdsCpuType>
             <RvctDeviceName></RvctDeviceName>
             <mOS>0</mOS>
