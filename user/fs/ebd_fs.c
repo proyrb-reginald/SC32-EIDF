@@ -4,7 +4,7 @@
 #include "sc32_conf.h"
 #include "log.h"
 #include "fs.h"
-#include "user.h"
+#include "main.h"
 
 static lfs_cfg ebd_fs_cfg = {
     .read  = ebd_fs_read,

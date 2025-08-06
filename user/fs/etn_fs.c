@@ -5,7 +5,7 @@
 #include "w25q64.h"
 #include "lvgl.h"
 #include "fs.h"
-#include "user.h"
+#include "main.h"
 
 static lfs_cfg etn_fs_cfg = {
     .read  = etn_fs_read,
