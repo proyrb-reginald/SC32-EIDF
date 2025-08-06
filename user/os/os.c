@@ -27,6 +27,8 @@ static StaticTask_t main_task_tcb;
 static StackType_t  lcd_task_stack[LCD_TASK_STACK];
 static StaticTask_t lcd_task_tcb;
 
+static TaskHandle_t tim_task_hdl;
+
 void vApplicationDaemonTaskStartupHook(void) {
     /********** 初始化系统资源 **********/
 
@@ -80,6 +82,8 @@ void vApplicationDaemonTaskStartupHook(void) {
         }
     }
 #endif  // ADD_GUI
+
+    tim_task_hdl = xTimerGetTimerDaemonTaskHandle();
 }
 
 void vApplicationMallocFailedHook(void) {
@@ -113,11 +117,10 @@ void vApplicationIdleHook(void) {
             }
         }
 
-        TaskHandle_t sys_task_hdl = xTimerGetTimerDaemonTaskHandle();
-        PRTF(NEWS_LOG, " [%c] %s: %zu W\n", get_task_state(sys_task_hdl),
-             pcTaskGetName(sys_task_hdl), uxTaskGetStackHighWaterMark2(sys_task_hdl));
+        PRTF(NEWS_LOG, " [%c] %s: %zu W\n", get_task_state(tim_task_hdl),
+             pcTaskGetName(tim_task_hdl), uxTaskGetStackHighWaterMark2(tim_task_hdl));
 
-        sys_task_hdl = xTaskGetIdleTaskHandle();
+        TaskHandle_t sys_task_hdl = xTaskGetCurrentTaskHandle();
         PRTF(NEWS_LOG, " [%c] %s: %zu W\n", get_task_state(sys_task_hdl),
              pcTaskGetName(sys_task_hdl), uxTaskGetStackHighWaterMark2(sys_task_hdl));
 

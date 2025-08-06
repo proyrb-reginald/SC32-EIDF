@@ -634,7 +634,7 @@ static void ui_init(void) {
     lv_obj_set_align(ui_main_label_idleval, LV_ALIGN_CENTER);
     lv_label_set_text(ui_main_label_idleval, "0 %");
 
-    /* ui_main_bar_idlebar = lv_bar_create(ui_main_panel_idlepan);
+    ui_main_bar_idlebar = lv_bar_create(ui_main_panel_idlepan);
     lv_bar_set_value(ui_main_bar_idlebar, 25, LV_ANIM_OFF);
     lv_bar_set_start_value(ui_main_bar_idlebar, 0, LV_ANIM_OFF);
     lv_obj_set_height(ui_main_bar_idlebar, 8);
@@ -642,7 +642,6 @@ static void ui_init(void) {
     lv_obj_set_align(ui_main_bar_idlebar, LV_ALIGN_CENTER);
     lv_obj_set_style_radius(ui_main_bar_idlebar, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_radius(ui_main_bar_idlebar, 0, LV_PART_INDICATOR | LV_STATE_DEFAULT);
-  */
 
     lv_timer_create(timer_cb, 1000, NULL);
 

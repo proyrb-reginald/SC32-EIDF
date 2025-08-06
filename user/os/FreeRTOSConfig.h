@@ -129,7 +129,7 @@
 /* 设置configSUPPORT_DYNAMIC_ALLOCATION为1启用动态内存分配API */
 #define configSUPPORT_DYNAMIC_ALLOCATION 1
 /* 设置heap_1/2/4.c使用的堆大小（字节） */
-#define configTOTAL_HEAP_SIZE (14 * 256U)
+#define configTOTAL_HEAP_SIZE (13 * 256U)
 /* 设置configAPPLICATION_ALLOCATED_HEAP为1由应用分配堆内存 */
 #define configAPPLICATION_ALLOCATED_HEAP 0
 /* 设置configSTACK_ALLOCATION_FROM_SEPARATE_HEAP为1从独立堆分配任务栈 */
@@ -281,7 +281,7 @@
 #define INCLUDE_eTaskGetState 1
 #define INCLUDE_xTimerPendFunctionCall 0
 #define INCLUDE_xTaskAbortDelay 0
-#define INCLUDE_xTaskGetHandle 0
+#define INCLUDE_xTaskGetHandle 1
 #define INCLUDE_xTaskResumeFromISR 0
 
 // 适配lvgl性能监视器

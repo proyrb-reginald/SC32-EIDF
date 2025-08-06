@@ -41,25 +41,17 @@
      strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 :                             \
                                __FILE__)
 
-// 附带系统信息的日志打印
-#define OS_PRTF(lev, fmt, ...)                                                           \
-    do {                                                                                 \
-        if (lev >= LOG_LEV) {                                                            \
-            taskENTER_CRITICAL();                                                        \
-            PRINTF("[%u:%s:%s:%d] " fmt "\n", GET_TICK(), pcTaskGetName(NULL),           \
-                   __FILENAME__, __LINE__, ##__VA_ARGS__);                               \
-            taskEXIT_CRITICAL();                                                         \
-        }                                                                                \
-    } while (0)
-
 // 普通日志打印
 #define PRTF(lev, fmt, ...)                                                              \
-    do {                                                                                 \
-        if (lev >= LOG_LEV) {                                                            \
-            taskENTER_CRITICAL();                                                        \
-            PRINTF(fmt, ##__VA_ARGS__);                                                  \
-            taskEXIT_CRITICAL();                                                         \
-        }                                                                                \
-    } while (0)
+    if (lev >= LOG_LEV) {                                                                \
+        taskENTER_CRITICAL();                                                            \
+        PRINTF(fmt, ##__VA_ARGS__);                                                      \
+        taskEXIT_CRITICAL();                                                             \
+    }
+
+// 附带系统信息的日志打印
+#define OS_PRTF(lev, fmt, ...)                                                           \
+    PRTF(lev, "[%u:%s:%s:%d] " fmt "\n", GET_TICK(), pcTaskGetName(NULL), __FILENAME__,  \
+         __LINE__, ##__VA_ARGS__);
 
 #endif  // LOG_H
